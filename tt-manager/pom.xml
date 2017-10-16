@@ -12,11 +12,6 @@
 
     <packaging>pom</packaging>
     <modules>
-        <module>tt-manager-pojo</module>
-        <module>tt-manager-dao</module>
-        <module>tt-manager-interface</module>
-        <module>tt-manager-service</module>
-        <module>tt-manager-web</module>
         <module>tt-manager-dao</module>
         <module>tt-manager-interface</module>
         <module>tt-manager-pojo</module>
