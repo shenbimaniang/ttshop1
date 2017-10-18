@@ -30,6 +30,7 @@
         <property name="configLocation" value="classpath:mybatis/mybatis-config.xml"/>
         <!--注入dao层的mapper映射文件-->
         <property name="mapperLocations" value="classpath*:com/xy/ttshop/dao/*Mapper.xml"/>
+        <property name="typeAliasesPackage" value="com.xy.ttshop.pojo.po"/>
     </bean>
     <!--配置完之后，DAO层接口就不需要实现了-->
     <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">

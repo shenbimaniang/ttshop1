@@ -22,6 +22,16 @@
             <version>1.0-SNAPSHOT</version>
         </dependency>
 
+        <!--jackson2的依赖-->
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-databind</artifactId>
+        </dependency>
+        <!-- 文件上传组件 -->
+        <dependency>
+            <groupId>commons-fileupload</groupId>
+            <artifactId>commons-fileupload</artifactId>
+        </dependency>
         <!--jsp相关-->
         <dependency>
             <groupId>javax.servlet</groupId>
