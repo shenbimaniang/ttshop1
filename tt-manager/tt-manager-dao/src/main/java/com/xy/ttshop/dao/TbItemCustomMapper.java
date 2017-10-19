@@ -2,6 +2,7 @@ package com.xy.ttshop.dao;
 
 import com.xy.common.dto.Page;
 import com.xy.ttshop.pojo.po.TbItem;
+import com.xy.ttshop.pojo.vo.TbItemCustom;
 
 import java.util.List;
 
@@ -14,4 +15,5 @@ import java.util.List;
 public interface TbItemCustomMapper {
     List<TbItem> listItemsByPage(Page page);
     long countItems();
+    List<TbItemCustom> listItemsByPage1(Page page);
 }

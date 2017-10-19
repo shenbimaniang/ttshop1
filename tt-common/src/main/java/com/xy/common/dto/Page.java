@@ -9,7 +9,7 @@ package com.xy.common.dto;
 public class Page {
     private int page;
     private int rows;
-    private int offset;
+    //private int offset;
 
     public int getPage() {
         return page;

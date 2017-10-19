@@ -15,7 +15,7 @@
         <result column="updated" property="updated" jdbcType="TIMESTAMP" />
     </resultMap>
     <sql id="Base_Column_List" >
-        id, title, sell_point, price, num, barcode, image, cid, status, created, updated
+        id, title, sell_point as sellpoint, price, num, barcode, image, cid, status, created, updated
     </sql>
     <select id="listItemsByPage" resultType="com.xy.ttshop.pojo.po.TbItem" resultMap="BaseResultMap" >
         select
@@ -25,5 +25,20 @@
     </select>
     <select id="countItems" resultType="java.lang.Long">
         select count(*) AS Total from tb_item
+        WHERE status != 3
+    </select>
+
+    <sql id="Base_Column_List1" >
+        i.id, i.title, i.sell_point as sellPoint,
+        i.price, i.num, i.barcode, i.image, i.cid,
+        i.status, i.created, i.updated,c.name as catName
+    </sql>
+    <select id="listItemsByPage1" resultType="com.xy.ttshop.pojo.vo.TbItemCustom" >
+        select
+        <include refid="Base_Column_List1" />
+        from tb_item i
+        left join tb_item_cat c on i.cid=c.id
+        WHERE i.status != 3
+        limit #{offset},#{rows}
     </select>
 </mapper>

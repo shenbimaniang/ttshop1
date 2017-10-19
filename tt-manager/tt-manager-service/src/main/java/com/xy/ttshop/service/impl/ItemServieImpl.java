@@ -5,6 +5,8 @@ import com.xy.common.dto.Result;
 import com.xy.ttshop.dao.TbItemMapper;
 import com.xy.ttshop.dao.TbItemCustomMapper;
 import com.xy.ttshop.pojo.po.TbItem;
+import com.xy.ttshop.pojo.po.TbItemExample;
+import com.xy.ttshop.pojo.vo.TbItemCustom;
 import com.xy.ttshop.service.ItemService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -39,6 +41,43 @@ public class ItemServieImpl implements ItemService {
         return rs;
     }
 
+    @Override
+    public Result<TbItemCustom> listItemsByPage1(Page page) {
+        List<TbItemCustom> list = tbItemCustomMapper.listItemsByPage1(page);
+        long counts = tbItemCustomMapper.countItems();
+        Result<TbItemCustom> rs = new Result<TbItemCustom>();
+        rs.setRows(list);
+        rs.setTotal(counts);
+        return rs;
+    }
 
+    @Override
+    public int modifyByIds(List<Long> ids) {
+        TbItem record = new TbItem();
+        record.setStatus((byte) 3);
+        TbItemExample example = new TbItemExample();
+        TbItemExample.Criteria criteria = example.createCriteria();
+        criteria.andIdIn(ids);
+        return itemDao.updateByExampleSelective(record,example);
+    }
 
+    @Override
+    public int modifyByIds2(List<Long> ids) {
+        TbItem record = new TbItem();
+        record.setStatus((byte) 1);
+        TbItemExample example = new TbItemExample();
+        TbItemExample.Criteria criteria = example.createCriteria();
+        criteria.andIdIn(ids);
+        return itemDao.updateByExampleSelective(record,example);
+    }
+
+    @Override
+    public int modifyByIds3(List<Long> ids) {
+        TbItem record = new TbItem();
+        record.setStatus((byte) 2);
+        TbItemExample example = new TbItemExample();
+        TbItemExample.Criteria criteria = example.createCriteria();
+        criteria.andIdIn(ids);
+        return itemDao.updateByExampleSelective(record,example);
+    }
 }
