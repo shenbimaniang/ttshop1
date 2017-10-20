@@ -24,21 +24,33 @@
         limit #{offset},#{rows}
     </select>
     <select id="countItems" resultType="java.lang.Long">
-        select count(*) AS Total from tb_item
-        WHERE status != 3
+        select count(*) AS Total from tb_item i
+        WHERE i.status != 3
+        ORDER BY id DESC
     </select>
 
     <sql id="Base_Column_List1" >
         i.id, i.title, i.sell_point as sellPoint,
-        i.price, i.num, i.barcode, i.image, i.cid,
-        i.status, i.created, i.updated,c.name as catName
+        FORMAT(i.price/100,2) AS priceView, i.num, i.barcode, i.image, i.cid,
+        i.status, i.created as created, i.updated,c.name as catName
     </sql>
     <select id="listItemsByPage1" resultType="com.xy.ttshop.pojo.vo.TbItemCustom" >
-        select
+        SELECT
         <include refid="Base_Column_List1" />
-        from tb_item i
-        left join tb_item_cat c on i.cid=c.id
+        FROM tb_item i
+        LEFT JOIN tb_item_cat c ON i.cid=c.id
         WHERE i.status != 3
-        limit #{offset},#{rows}
+        <choose>
+            <when test="order != null and order.sort != null and order.order != null">
+                <foreach collection="order.orderParams" item="item" open="order by" close="" separator=",">
+                    i.${item}
+                </foreach>
+            </when>
+            <otherwise>
+                ORDER BY i.id DESC
+            </otherwise>
+        </choose>
+        limit #{page.offset},#{page.rows}
+
     </select>
 </mapper>

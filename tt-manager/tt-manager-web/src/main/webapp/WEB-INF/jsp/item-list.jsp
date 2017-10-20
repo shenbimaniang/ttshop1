@@ -14,20 +14,20 @@
         text: '删除',
         handler: function () {
             var selectRows = $('#dg').datagrid('getSelections');
-            if (selectRows.length==0){
-                $.messager.alert('提示','未选中记录','warning');
+            if (selectRows.length == 0) {
+                $.messager.alert('提示', '未选中记录', 'warning');
                 return;
             }
 
-            $.messager.confirm('确认','您确认想要删除记录吗',function (r) {
-                if (r){
-                    var ids =[];
-                    for (var i = 0;i<selectRows.length;i++){
+            $.messager.confirm('确认', '您确认想要删除记录吗', function (r) {
+                if (r) {
+                    var ids = [];
+                    for (var i = 0; i < selectRows.length; i++) {
                         ids.push(selectRows[i].id)
                     }
                     $.post(
                         'item/batch',
-                        {'ids[]':ids},
+                        {'ids[]': ids},
                         function (data) {
                             $('#dg').datagrid('reload');
                         },
@@ -47,19 +47,19 @@
         text: '上架',
         handler: function () {
             var selectRows = $('#dg').datagrid('getSelections');
-            if (selectRows.length==0){
-                $.messager.alert('提示','未选中记录','warning');
+            if (selectRows.length == 0) {
+                $.messager.alert('提示', '未选中记录', 'warning');
                 return;
             }
-            $.messager.confirm('确认','您确认想要上架这些商品吗',function (r) {
-                if (r){
-                    var ids =[];
-                    for (var i = 0;i<selectRows.length;i++){
+            $.messager.confirm('确认', '您确认想要上架这些商品吗', function (r) {
+                if (r) {
+                    var ids = [];
+                    for (var i = 0; i < selectRows.length; i++) {
                         ids.push(selectRows[i].id)
                     }
                     $.post(
                         'item/up',
-                        {'ids[]':ids},
+                        {'ids[]': ids},
                         function (data) {
                             $('#dg').datagrid('reload');
                         },
@@ -73,19 +73,19 @@
         text: '下架',
         handler: function () {
             var selectRows = $('#dg').datagrid('getSelections');
-            if (selectRows.length==0){
-                $.messager.alert('提示','未选中记录','warning');
+            if (selectRows.length == 0) {
+                $.messager.alert('提示', '未选中记录', 'warning');
                 return;
             }
-            $.messager.confirm('确认','您确认想要下架这些商品吗',function (r) {
-                if (r){
-                    var ids =[];
-                    for (var i = 0;i<selectRows.length;i++){
+            $.messager.confirm('确认', '您确认想要下架这些商品吗', function (r) {
+                if (r) {
+                    var ids = [];
+                    for (var i = 0; i < selectRows.length; i++) {
                         ids.push(selectRows[i].id)
                     }
                     $.post(
                         'item/down',
-                        {'ids[]':ids},
+                        {'ids[]': ids},
                         function (data) {
                             $('#dg').datagrid('reload');
                         },
@@ -98,17 +98,18 @@
 
 
     $('#dg').datagrid({
+        multiSort:true,
         pageSize: 20,
         toolbar: toolbar,
         fit: true,
         pagination: true,
         url: 'items',
         columns: [[
-            {field:'ck',checkbox:true},
-            {field: 'id', title: '商品编号', width: 100},
-            {field: 'title', title: '商品名称', width: 100},
+            {field: 'ck', checkbox: true},
+            {field: 'id', title: '商品编号', width: 100,sortable:true},
+            {field: 'title', title: '商品名称', width: 100,sortable:true},
             {field: 'sellPoint', title: '卖点', width: 100},
-            {field: 'catName', title: '类别', width: 100},
+            {field: 'catName', title: '类别'},
             {
                 field: 'status', title: '状态', formatter: function (value, row, index) {
                 switch (value) {
@@ -124,8 +125,19 @@
                     default:
                         return '未知';
                         break;
+                    }
                 }
+            },
+            {field: 'priceView', title: '商品价格'},
+            {
+                field: 'created', title: '创建时间', formatter: function (value, row, index) {
+                return moment(value).format('L');
             }
+            },
+            {
+                field: 'updated', title: '更新时间', formatter: function (value, row, index) {
+                    return moment(value).format('L');
+                }
             }
         ]]
     });

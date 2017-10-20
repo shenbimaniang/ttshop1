@@ -1,5 +1,6 @@
 package com.xy.ttshop.service;
 
+import com.xy.common.dto.Order;
 import com.xy.common.dto.Page;
 import com.xy.common.dto.Result;
 import com.xy.ttshop.pojo.po.TbItem;
@@ -14,7 +15,7 @@ public interface ItemService {
 
     Result<TbItem> listItemsByPage(Page page);
 
-    Result<TbItemCustom> listItemsByPage1(Page page);
+    Result<TbItemCustom> listItemsByPage1(Page page, Order order);
 
     int modifyByIds(List<Long> ids);
 

@@ -1,5 +1,6 @@
 package com.xy.ttshop.service.impl;
 
+import com.xy.common.dto.Order;
 import com.xy.common.dto.Page;
 import com.xy.common.dto.Result;
 import com.xy.ttshop.dao.TbItemMapper;
@@ -11,7 +12,9 @@ import com.xy.ttshop.service.ItemService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class ItemServieImpl implements ItemService {
@@ -42,8 +45,11 @@ public class ItemServieImpl implements ItemService {
     }
 
     @Override
-    public Result<TbItemCustom> listItemsByPage1(Page page) {
-        List<TbItemCustom> list = tbItemCustomMapper.listItemsByPage1(page);
+    public Result<TbItemCustom> listItemsByPage1(Page page,Order order) {
+        Map<String,Object> map = new HashMap<String, Object>();
+        map.put("page",page);
+        map.put("order",order);
+        List<TbItemCustom> list = tbItemCustomMapper.listItemsByPage1(map);
         long counts = tbItemCustomMapper.countItems();
         Result<TbItemCustom> rs = new Result<TbItemCustom>();
         rs.setRows(list);

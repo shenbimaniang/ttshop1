@@ -1,5 +1,6 @@
 package com.xy.ttshop.web;
 
+import com.xy.common.dto.Order;
 import com.xy.common.dto.Page;
 import com.xy.common.dto.Result;
 import com.xy.ttshop.pojo.po.TbItem;
@@ -39,8 +40,8 @@ public class ItemAction {
 
     @ResponseBody
     @RequestMapping("/items")
-    public Result<TbItemCustom> listItemsByPage1(Page page){
-        return itemService.listItemsByPage1(page);
+    public Result<TbItemCustom> listItemsByPage1(Page page, Order order){
+        return itemService.listItemsByPage1(page,order);
     }
 
     @ResponseBody
