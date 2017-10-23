@@ -8,6 +8,7 @@ import com.xy.ttshop.dao.TbItemCustomMapper;
 import com.xy.ttshop.pojo.po.TbItem;
 import com.xy.ttshop.pojo.po.TbItemExample;
 import com.xy.ttshop.pojo.vo.TbItemCustom;
+import com.xy.ttshop.pojo.vo.TbItemQuery;
 import com.xy.ttshop.service.ItemService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -37,20 +38,21 @@ public class ItemServieImpl implements ItemService {
     @Override
     public Result<TbItem> listItemsByPage(Page page) {
         List<TbItem> list = tbItemCustomMapper.listItemsByPage(page);
-        long counts = tbItemCustomMapper.countItems();
+//        long counts = tbItemCustomMapper.countItems();
         Result<TbItem> rs = new Result<TbItem>();
         rs.setRows(list);
-        rs.setTotal(counts);
+//        rs.setTotal(counts);
         return rs;
     }
 
     @Override
-    public Result<TbItemCustom> listItemsByPage1(Page page,Order order) {
+    public Result<TbItemCustom> listItemsByPage1(Page page, Order order, TbItemQuery query) {
         Map<String,Object> map = new HashMap<String, Object>();
         map.put("page",page);
         map.put("order",order);
+        map.put("query",query);
         List<TbItemCustom> list = tbItemCustomMapper.listItemsByPage1(map);
-        long counts = tbItemCustomMapper.countItems();
+        long counts = tbItemCustomMapper.countItems(map);
         Result<TbItemCustom> rs = new Result<TbItemCustom>();
         rs.setRows(list);
         rs.setTotal(counts);

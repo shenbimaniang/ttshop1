@@ -5,6 +5,7 @@ import com.xy.common.dto.Page;
 import com.xy.common.dto.Result;
 import com.xy.ttshop.pojo.po.TbItem;
 import com.xy.ttshop.pojo.vo.TbItemCustom;
+import com.xy.ttshop.pojo.vo.TbItemQuery;
 
 import java.util.List;
 
@@ -15,7 +16,7 @@ public interface ItemService {
 
     Result<TbItem> listItemsByPage(Page page);
 
-    Result<TbItemCustom> listItemsByPage1(Page page, Order order);
+    Result<TbItemCustom> listItemsByPage1(Page page, Order order, TbItemQuery query);
 
     int modifyByIds(List<Long> ids);
 

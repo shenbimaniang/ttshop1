@@ -15,6 +15,6 @@ import java.util.Map;
  */
 public interface TbItemCustomMapper {
     List<TbItem> listItemsByPage(Page page);
-    long countItems();
+    long countItems(Map<String,Object> map);
     List<TbItemCustom> listItemsByPage1(Map<String,Object> map);
 }

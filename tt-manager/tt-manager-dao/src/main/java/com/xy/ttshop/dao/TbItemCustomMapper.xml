@@ -25,7 +25,7 @@
     </select>
     <select id="countItems" resultType="java.lang.Long">
         select count(*) AS Total from tb_item i
-        WHERE i.status != 3
+        <include refid="Where_Clause" />
         ORDER BY id DESC
     </select>
 
@@ -34,12 +34,23 @@
         FORMAT(i.price/100,2) AS priceView, i.num, i.barcode, i.image, i.cid,
         i.status, i.created as created, i.updated,c.name as catName
     </sql>
+    <sql id="Where_Clause">
+        <where>
+            i.status != 3
+            <if test="query != null and query.title != null and query.title != '' ">
+                and i.title like '%${query.title}%'
+            </if>
+            <if test="query != null and query.status != null and query.status != 0 ">
+                and i.status = #{query.status}
+            </if>
+        </where>
+    </sql>
     <select id="listItemsByPage1" resultType="com.xy.ttshop.pojo.vo.TbItemCustom" >
         SELECT
         <include refid="Base_Column_List1" />
         FROM tb_item i
         LEFT JOIN tb_item_cat c ON i.cid=c.id
-        WHERE i.status != 3
+        <include refid="Where_Clause" />
         <choose>
             <when test="order != null and order.sort != null and order.order != null">
                 <foreach collection="order.orderParams" item="item" open="order by" close="" separator=",">
