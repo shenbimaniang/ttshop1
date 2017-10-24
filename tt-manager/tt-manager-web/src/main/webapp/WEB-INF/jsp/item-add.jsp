@@ -45,6 +45,12 @@
                            data-options="validType:'length[0,30]'">
                 </td>
             </tr>
+            <tr>
+                <td colspan="2">
+                    <!-- 加载编辑器的容器 -->
+                    <script id="container" name="content" type="text/plain"></script>
+                </td>
+            </tr>
 
 
             <tr class="paramsShow" style="display:none;">
@@ -70,6 +76,29 @@
 </div>
 
 <script>
+    //初始化树形下拉框
+    $('#cid').combotree({
+        url:'itemCats?parentId=0',
+        required:true,
+        onBeforeExpand:function (node) {
+            var options = $('#cid').combotree('tree').tree('options');
+            options.url = 'itemCats?parentId='+node.id;
+        },
+        onBeforeSelect:function (node) {
+            var isLeaf = $('#cid').tree('isLeaf',node.target);
+            if (!isLeaf){
+                $.messager.alert('警告','您选择的不是最终条目','warning');
+                return false;
+            }
+        }
+    });
+
+
+
+    //初始化百度的富文本编辑器
+    var ue = UE.getEditor('container');
+
+
     function submitForm() {
         $('#itemAddForm').form('submit', {
             //提交给后台处理的URL地址
@@ -78,6 +107,7 @@
             onSubmit: function () {
                 //this:DOM对象
                 //$(this)：jquery对象
+                $('#price').val($('#priceView').val()*100);
                 return $(this).form('validate');
             },
             //提交处理成功后的动作

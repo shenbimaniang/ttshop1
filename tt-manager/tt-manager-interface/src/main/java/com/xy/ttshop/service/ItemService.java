@@ -23,4 +23,6 @@ public interface ItemService {
     int modifyByIds2(List<Long> ids);
 
     int modifyByIds3(List<Long> ids);
+
+    int saveItem(TbItem tbItem,String content);
 }

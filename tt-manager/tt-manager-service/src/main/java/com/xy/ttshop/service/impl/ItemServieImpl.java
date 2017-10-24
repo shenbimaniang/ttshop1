@@ -3,16 +3,21 @@ package com.xy.ttshop.service.impl;
 import com.xy.common.dto.Order;
 import com.xy.common.dto.Page;
 import com.xy.common.dto.Result;
+import com.xy.common.utils.IdUtil;
+import com.xy.ttshop.dao.TbItemDescMapper;
 import com.xy.ttshop.dao.TbItemMapper;
 import com.xy.ttshop.dao.TbItemCustomMapper;
 import com.xy.ttshop.pojo.po.TbItem;
+import com.xy.ttshop.pojo.po.TbItemDesc;
 import com.xy.ttshop.pojo.po.TbItemExample;
 import com.xy.ttshop.pojo.vo.TbItemCustom;
 import com.xy.ttshop.pojo.vo.TbItemQuery;
 import com.xy.ttshop.service.ItemService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -22,6 +27,9 @@ public class ItemServieImpl implements ItemService {
 
     @Autowired
     private TbItemMapper itemDao;
+
+    @Autowired
+    private TbItemDescMapper descDao;
 
     @Autowired
     private TbItemCustomMapper tbItemCustomMapper;
@@ -87,5 +95,24 @@ public class ItemServieImpl implements ItemService {
         TbItemExample.Criteria criteria = example.createCriteria();
         criteria.andIdIn(ids);
         return itemDao.updateByExampleSelective(record,example);
+    }
+
+    @Transactional
+    @Override
+    public int saveItem(TbItem tbItem, String content) {
+        Long itemId = IdUtil.getItemId();
+        tbItem.setId(itemId);
+        tbItem.setStatus((byte)1);
+        tbItem.setCreated(new Date());
+        tbItem.setUpdated(new Date());
+
+        int count = itemDao.insert(tbItem);
+        TbItemDesc tbItemDesc = new TbItemDesc();
+        tbItemDesc.setItemDesc(content);
+        tbItemDesc.setCreated(new Date());
+        tbItemDesc.setItemId(itemId);
+        tbItemDesc.setUpdated(new Date());
+        count += descDao.insert(tbItemDesc);
+        return count;
     }
 }

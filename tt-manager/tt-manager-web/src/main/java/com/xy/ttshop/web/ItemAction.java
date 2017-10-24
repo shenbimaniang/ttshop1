@@ -62,4 +62,10 @@ public class ItemAction {
     public int modifyByIds3(@RequestParam("ids[]") List<Long> ids){
         return itemService.modifyByIds3(ids);
     }
+
+    @ResponseBody
+    @RequestMapping("/item")
+    public int saveItem(TbItem tbItem,String content){
+        return itemService.saveItem(tbItem,content);
+    }
 }
